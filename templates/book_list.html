@@ -2,42 +2,52 @@
 <!-- Страница со списком всех книг -->
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Book List</title>
     <!-- Подключаем стили Bootstrap -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
+
 <body>
     <div class="container mt-3">
         <a href="{{ url_for('index') }}" class="btn btn-primary mb-3">Home</a>
         <h1>List of Books</h1>
         <!-- Выводим список книг -->
         <ul class="list-group mt-3">
+            <!-- Добавляем выпадающий список для выбора жанра -->
+            <select onchange="window.location.href = '/books?genre=' + this.value">
+                <option value="">All Genres</option>
+                {% for genre in genres %}
+                <option value="{{ genre.name }}">{{ genre.name }}</option>
+                {% endfor %}
+            </select>
             <!-- Итерация по списку книг -->
             {% for book in books %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <!-- Выводим название и автора книги -->
-                    {{ book.title }} by {{ book.author }}
-                    <!-- Ссылка для удаления книги -->
-                    <a class="btn btn-danger btn-sm" href="{{ url_for('delete_book', book_id=book.id) }}">Delete</a>
-                </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <!-- Выводим название и автора книги -->
+                {{ book.title }} by {{ book.author }}
+                <!-- Ссылка для удаления книги -->
+                <a class="btn btn-danger btn-sm" href="{{ url_for('delete_book', book_id=book.id) }}">Delete</a>
+            </li>
             {% else %}
-                <!-- Если список книг пуст, выводим сообщение -->
-                <li class="list-group-item">No books available.</li>
-            {% endfor %}    
+            <!-- Если список книг пуст, выводим сообщение -->
+            <li class="list-group-item">No books available.</li>
+            {% endfor %}
         </ul>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-          const deleteButtons = document.querySelectorAll('.btn-danger');
-          deleteButtons.forEach(function(button) {
-            button.addEventListener('click', function(event) {
-              if (!confirm('Are you sure you want to delete this book?')) {
-                event.preventDefault();
-              }
+        document.addEventListener('DOMContentLoaded', function () {
+            const deleteButtons = document.querySelectorAll('.btn-danger');
+            deleteButtons.forEach(function (button) {
+                button.addEventListener('click', function (event) {
+                    if (!confirm('Are you sure you want to delete this book?')) {
+                        event.preventDefault();
+                    }
+                });
             });
-          });
         });
     </script>
 </body>
+
 </html>

@@ -46,10 +46,15 @@ def add_book():
 # Маршрут для отображения списка книг
 @app.route('/books')
 def book_list():
-    # Получаем все книги из базы данных с жанрами в одном запросе
-    books = Book.query.options(joinedload(Book.genre)).all()
+    genre_name = request.args.get('genre')
+    if genre_name:
+        # Получаем книги определенного жанра
+        books = Book.query.join(Genre).filter(Genre.name == genre_name).options(joinedload(Book.genre)).all()
+    else:
+        # Получаем все книги из базы данных с жанрами в одном запросе
+        books = Book.query.options(joinedload(Book.genre)).all()
     # Отображаем страницу со списком книг
-    return render_template('book_list.html', books=books)
+    return render_template('book_list.html', books=books, genres=Genre.query.all())
 
 # Маршрут для поиска книг
 @app.route('/search', methods=['GET', 'POST'])
