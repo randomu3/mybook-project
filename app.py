@@ -1,7 +1,8 @@
 # app.py
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, flash
 from extensions import app, db
 from models import Book, Genre
+from sqlalchemy.orm import joinedload
 
 # Маршрут для добавления книги
 @app.route('/add_book', methods=['GET', 'POST'])
@@ -15,6 +16,11 @@ def add_book():
         description = request.form.get('description')
         genre_name = request.form.get('genre')
         new_genre_name = request.form.get('new_genre')
+
+        # Валидация данных
+        if not title or not author:
+            flash('Title and author are required!', 'error')
+            return render_template('add_book.html', genres=genres)
 
         # Если введен новый жанр, проверяем его наличие в базе или создаем новый
         if new_genre_name:
@@ -40,8 +46,8 @@ def add_book():
 # Маршрут для отображения списка книг
 @app.route('/books')
 def book_list():
-    # Получаем все книги из базы данных
-    books = Book.query.all()
+    # Получаем все книги из базы данных с жанрами в одном запросе
+    books = Book.query.options(joinedload(Book.genre)).all()
     # Отображаем страницу со списком книг
     return render_template('book_list.html', books=books)
 
@@ -60,8 +66,8 @@ def search():
 # Маршрут для отображения деталей книги
 @app.route('/book/<int:book_id>')
 def book_detail(book_id):
-    # Получаем книгу по ID или возвращаем ошибку 404
-    book = Book.query.get_or_404(book_id)
+    # Получаем книгу по ID с жанром в одном запросе
+    book = Book.query.options(joinedload(Book.genre)).get_or_404(book_id)
     # Отображаем страницу с деталями книги
     return render_template('book_detail.html', book=book)
 

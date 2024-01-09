@@ -10,6 +10,9 @@
 </head>
 <body>
     <div class="container mt-3">
+        <!-- Переход на другие страницы -->
+        <a href="{{ url_for('index') }}" class="btn btn-primary mb-3">Home</a>
+        <a href="{{ url_for('book_list') }}" class="btn btn-secondary mb-3">View Books</a>
         <!-- Заголовок с названием книги -->
         <h1>{{ book.title }}</h1>
         <!-- Параграф с автором книги -->
