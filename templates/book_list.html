@@ -13,15 +13,15 @@
     <div class="container mt-3">
         <a href="{{ url_for('index') }}" class="btn btn-primary mb-3">Home</a>
         <h1>List of Books</h1>
+        <!-- Добавляем выпадающий список для выбора жанра -->
+        <select onchange="window.location.href = '/books?genre=' + this.value">
+            <option value="">All Genres</option>
+            {% for genre in genres %}
+            <option value="{{ genre.name }}">{{ genre.name }}</option>
+            {% endfor %}
+        </select>
         <!-- Выводим список книг -->
         <ul class="list-group mt-3">
-            <!-- Добавляем выпадающий список для выбора жанра -->
-            <select onchange="window.location.href = '/books?genre=' + this.value">
-                <option value="">All Genres</option>
-                {% for genre in genres %}
-                <option value="{{ genre.name }}">{{ genre.name }}</option>
-                {% endfor %}
-            </select>
             <!-- Итерация по списку книг -->
             {% for book in books %}
             <li class="list-group-item d-flex justify-content-between align-items-center">

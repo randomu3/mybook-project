@@ -61,6 +61,10 @@ def book_list():
 def search():
     if request.method == 'POST':
         search_term = request.form.get('search_term')
+        # Добавляем валидацию для проверки пустого поля поиска
+        if not search_term.strip():
+            flash('Please enter a search term.', 'error')
+            return redirect(url_for('search'))
         # Фильтруем книги по названию или автору
         books = Book.query.filter((Book.title.contains(search_term)) | (Book.author.contains(search_term))).all()
         # Отображаем страницу со списком найденных книг
