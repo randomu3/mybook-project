@@ -1,0 +1,24 @@
+<!-- templates/search.html -->
+<!-- Страница для поиска книг -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Search Books</title>
+    <!-- Подключаем стили Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-3">
+        <h1>Search Books</h1>
+        <!-- Форма для поиска книг -->
+        <form method="post" class="form-inline mt-3">
+            <div class="form-group mx-sm-3 mb-2">
+                <!-- Поле для ввода поискового запроса -->
+                Search: <input type="text" class="form-control ml-2" name="search_term">
+            </div>
+            <!-- Кнопка для отправки формы -->
+            <button type="submit" class="btn btn-primary mb-2">Search</button>
+        </form>
+    </div>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!-- templates/book_list.html -->
+<!-- Страница со списком всех книг -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Book List</title>
+    <!-- Подключаем стили Bootstrap -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-3">
+        <h1>List of Books</h1>
+        <!-- Выводим список книг -->
+        <ul class="list-group mt-3">
+            <!-- Итерация по списку книг -->
+            {% for book in books %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <!-- Выводим название и автора книги -->
+                    {{ book.title }} by {{ book.author }}
+                    <!-- Ссылка для удаления книги -->
+                    <a class="btn btn-danger btn-sm" href="{{ url_for('delete_book', book_id=book.id) }}">Delete</a>
+                </li>
+            {% else %}
+                <!-- Если список книг пуст, выводим сообщение -->
+                <li class="list-group-item">No books available.</li>
+            {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

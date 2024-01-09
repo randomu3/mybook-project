@@ -1,0 +1,23 @@
+<!-- templates/book_detail.html -->
+<!-- Страница с детальной информацией о книге -->
+<!DOCTYPE html>
+<html>
+<head>
+    <!-- Заголовок страницы содержит название книги -->
+    <title>{{ book.title }}</title>
+    <!-- Подключение стилей Bootstrap для оформления -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-3">
+        <!-- Заголовок с названием книги -->
+        <h1>{{ book.title }}</h1>
+        <!-- Параграф с автором книги -->
+        <p>Author: {{ book.author }}</p>
+        <!-- Параграф с описанием книги -->
+        <p>Description: {{ book.description }}</p>
+        <!-- Параграф с жанром книги, получаем жанр через связь в модели -->
+        <p>Genre: {{ book.genre.name }}</p>
+    </div>
+</body>
+</html>
